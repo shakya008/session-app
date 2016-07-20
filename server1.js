@@ -2,12 +2,17 @@ var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var path = require('path');
 var app = express();
 
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 
-app.use(session({secret: 'ssshhhhh'}));
+
+
+app.use(session({secret: 'ssshhhhh',
+                    resave: false,
+                  saveUninitialized: false}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -16,18 +21,19 @@ var sess;
 
 app.get('/',function(req,res){
 sess = req.session;
-console.log(sess);
+console.log("hi this for testing");
+//console.log(sess);
 //Session set when user Request our app via URL
-if(sess.email) {
+//if(sess.email) {
 /*
 * This line check Session existence.
 * If it existed will do some action.
 */
     res.redirect('/admin');
-}
+/*}
 else {
     res.render('index.html');
-}
+}*/
 });
 
 app.post('/login',function(req,res){
@@ -39,7 +45,8 @@ app.post('/login',function(req,res){
 });
 app.get('/admin',function(req,res){
   sess = req.session;
-  console.log('Cookies: ', req.cookies);
+  console.log(sess);
+  //console.log('Cookies: ', req.cookies);
 if(sess.email) {
 res.write('<h1>Hello '+sess.email+'</h1>');
 res.end('<a href="/logout">Logout</a>');
@@ -59,6 +66,4 @@ req.session.destroy(function(err) {
 });
 });
 
-app.listen(3000,function(){
-console.log("App Started on PORT 3000");
-});
+app.listen(5000);

@@ -1,0 +1,18 @@
+{
+  "name": "angular",
+  "description": "A starter project for AngularJS",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.5.0",
+    "angular-route": "~1.5.0"
+  }
+}
+/*
+ Install bower globally or make a soft link from
+  /usr/local/bin/bower to installed location.
+  configure the .bowerrc to provide file download path, like below
+  {
+  "directory": "webapp/bower_components"
+}
+*/
