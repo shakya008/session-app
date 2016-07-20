@@ -3,6 +3,8 @@
 <title>Session Management in NodeJS using Express4.2</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/angular-route/angular-route.min.js"></script>
+<script src="/app.js"></script>
 <script>
 $(document).ready(function(){
     var email,pass;
@@ -25,6 +27,9 @@ $(document).ready(function(){
 <body>
 <div>
     starting your fist angularJS app
+</div>
+<div ng-app="chatApp">
+    <div ng-view class="container-fluid"></div>
 </div>
 </body>
 </html>
