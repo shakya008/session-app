@@ -15,7 +15,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 //  app.set('view engine', 'jade');*/
 //app.engine('html', require('ejs').renderFile);
-app.engine('html', require('ejs').renderFile); 
+app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'webapp')));
 
-/* 
+/*
 dynamically include routes (Controller)
 http://timstermatic.github.io/blog/2013/08/17/a-simple-mvc-framework-with-node-and-express/
 fs.readdirSync('./controllers').forEach(function (file) {
@@ -43,7 +43,7 @@ mongoose.connect(conf.DB_URL, {}, function(err) {
   // body...
   if(err){
     console.log("Could not connect to monogoDB");
-    console.log(err);  
+    console.log(err);
   } else {
     mongoose.set("debug", "false");
     console.log("Connected to MongoDB");

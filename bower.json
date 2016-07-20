@@ -8,11 +8,3 @@
     "angular-route": "~1.5.0"
   }
 }
-/*
- Install bower globally or make a soft link from
-  /usr/local/bin/bower to installed location.
-  configure the .bowerrc to provide file download path, like below
-  {
-  "directory": "webapp/bower_components"
-}
-*/

@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "my first chat app",
   "scripts": {
-    "start": "node server1.js"
+    "start": "node server1.js",
+    "postinstall": "bower install",
+    "prestart": "npm install"
   },
   "devDependencies": {
     "bower": "^1.7.7"
