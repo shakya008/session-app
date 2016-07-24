@@ -3,16 +3,8 @@ var router = express.Router();
 var Users = require("../controllers/usersController");
 
 /* GET home page. */
-var sess;
-router.post('/login', function(req, res) {
-sess = req.session;
-sess.email = req.body.email;
-sess.password = req.body.password;
-	console.log('shyama login');
-	
 
-  res.send('shyam');
-});
+router.post('/login', Users.login);
 router.get('/admin', function(req, res) {
 console.log(req.session.email);
 
@@ -21,4 +13,7 @@ console.log(req.session.email);
 
 router.post("/register", Users.registerUser);
 router.get("/userAvail", Users.checkAvailability);
+router.get("/logout", Users.logoutUser);
+router.get("/isActive", Users.checkSession);
+
 module.exports = router;

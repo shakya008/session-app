@@ -27,10 +27,37 @@ function registerUser(req, res) {
                 }
         });
 };
+var session;
 function login(req, res){
-
+    var email = req.body.email;
+    var passwd = req.body.passwd;
+    registrationSchema.findOne({"email": email}, function(err, user){
+        console.log(user);
+        var obj = {
+                "success": false
+            };
+        if(err){
+            res.json(err);
+        } else if(user){
+            console.log(passwd, req.body.passwd);
+            if(user.passwd === passwd){
+                obj.user = user;
+                obj.success = true;
+                session = req.session;
+                session.user = user;
+                res.json(obj);
+            } else {
+                obj.msg = "user name or password does not match";
+                res.json(obj);
+            }
+        } else{
+            obj.msg = "user name or password does not match!!";
+            res.json(obj);
+        }
+    })
 };
 function checkAvailability(req, res){
+    console.log(req.query);
     registrationSchema.find(req.query, function(err, users){
         if(err){
             res.send(err);
@@ -39,8 +66,26 @@ function checkAvailability(req, res){
         }
     })
 }
+function logoutUser(req, res){
+    req.session.destroy(function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            session = null;
+            res.json({"success" : true});
+        }
+    });
+}
+
+function checkSession(req, res){
+    var isActive = req.session.user && true;
+    console.log(req.session.user.email);
+    res.json({"isActive": isActive});
+}
 module.exports = {
     registerUser : registerUser,
-    login        : login,
-    checkAvailability : checkAvailability
+           login : login,
+    checkAvailability : checkAvailability,
+    logoutUser : logoutUser,
+    checkSession : checkSession
 };
