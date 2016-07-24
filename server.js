@@ -2,11 +2,13 @@ var express = require('express');
 var path = require('path');
 //var favicon = require('serve-favicon');
 //var logger = require('morgan');
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-/*var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./routes/index');
+var login = require('./routes/login');
+/*var users = require('./routes/users');
 var route = require('./routes/route');*/
 
 var app = express();
@@ -21,6 +23,10 @@ app.set('view engine', 'html');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 //app.use(logger('dev'));
+
+app.use(session({secret: 'ssshhhhh',
+                    resave: false,
+                  saveUninitialized: false}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -54,10 +60,29 @@ mongoose.connect(conf.DB_URL, {}, function(err) {
 app.use(function(req,res,next){
     next();
 });
-
-app.use('/', function(req, res){
-  res.render('index.html');
+var mongoose = require('mongoose');
+mongoose.connect('localhost:27017/chat-app', {}, function(err) {
+  // body...
+  if(err){
+    console.log("Could not connect to monogoDB");
+    console.log(err);  
+  } else {
+    mongoose.set("debug", "false");
+    console.log("Connected to MongoDB");
+  }
 });
+var sess;
+app.use('/', routes);
+app.use("/rest/api", login);
+/*app.get('/', function(req, res){
+  console.log(req.url);
+  res.render('index.html');
+});*/
+app.get('/admin', function(req, res){
+  console.log(req.url);
+  res.redirect('/#/home');
+});
+
 /*app.use('/users', users);
 app.use('/rest/api', route);*/
 
